@@ -1,35 +1,33 @@
 <!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"20px","bottom":"20px"}}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignwide has-base-background-color has-background"
-	style="padding-top:20px;padding-bottom:20px">
+<div class="wp-block-group alignwide has-background navigation-bar">
 	<!-- wp:group {"align":"wide","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|20"},"layout":{"selfStretch":"fit","flexSize":null}},"layout":{"type":"flex"}} -->
-		<div class="wp-block-group">
-			<!-- wp:site-logo {"width":60 } /-->
-
-			<!-- wp:group {"style":{"spacing":{"blockGap":"0px"}}} -->
-			<div class="wp-block-group">
-				<!-- wp:site-title {"level":0} /-->
-			</div>
-			<!-- /wp:group -->
+		<div class="wp-block-group navigation-header">
+			<!-- wp:site-logo {"width":90 } /-->
 		</div>
 		<!-- /wp:group -->
 
 		<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"left"}} -->
 		<div class="wp-block-group navigation-header">
-			<div class="wp-block-group  navigation-header">
+			<div class="wp-block-group  navigation-items">
 				<a href="/">Trang chủ</a>
 			</div>
-			<div class="wp-block-group  navigation-header san-pham-header">
+			<div class="wp-block-group  navigation-items">
+				<a href="/gioi-thieu">Giới thiệu</a>
+			</div>
+			<div class="wp-block-group  navigation-items san-pham-header">
 				<a href="/cua-hang">Sản phẩm</a>
-				<div class="wp-block-group product-list" style="display: none;">
+				<div class="wp-block-group product-list">
 					<!-- wp:woocommerce/product-categories {"hasCount":false,"hasImage":false,"isDropdown":false,"align":"wide"} /-->
 				</div>
 			</div>
-			<div class="wp-block-group cart-icon">
+		</div>
+		<div class="wp-block-group navigation-header  avatar-header">
+			<div class="wp-block-group cart-icon navigation-items">
 				<!-- wp:woocommerce/mini-cart /-->
 			</div>
-			<div class="wp-block-group user-icon">
+			<div class="wp-block-group user-icon navigation-items">
 				<!-- wp:shortcode -->
 					[mini_account]
 				<!-- /wp:shortcode -->

@@ -1,23 +1,104 @@
-.navigation-header{
-	display: flex;
-	padding: 5px;
+@font-face {
+  font-family: 'Mulish';
+  src: url('fonts/Mulish.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.navigation-header>a{
-	text-decoration: none;                                     
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Mulish', sans-serif;
+  font-weight: bold;
 }
+
+a{
+	color: #333 !important;
+	text-decoration: none !important;
+}
+
+a:hover{
+	color: #c83791 !important;
+}
+
+body {
+  font-family: 'Mulish', sans-serif;
+}
+
+.navigation-bar{
+	background-color: #fff;
+}
+
+.navigation-header{
+	display: flex;
+	padding: 0 15px;
+	align-items: left;
+	margin-right: 20px;
+}
+
+.navigation-items{
+	display: flex;
+	padding: 8px 15px;
+	align-items: left;
+}
+
+.navigation-items>a{
+  	position: relative;
+	text-decoration: none;    
+  	display: inline-block; /* rất quan trọng */         
+  	color: #333;                           
+}
+
+.navigation-items>a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #c83791;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.navigation-items>a:hover{
+	  color: #c83791;
+}
+
+.navigation-items>a:hover::after {
+  transform: scaleX(1);
+}
+
 
 .product-list{
 	width: 100%;
-	height: 500px;
+	height: auto;
 	z-index: 9999;         /* nằm trên tất cả giao diện khác */
 	background: #fff;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.15);  /* tạo bóng để nổi bật */
 	position: absolute;
-	padding: 0 50px;
-	top: 60px;
+	padding: 20px 50px;
+	top: 93px;
 	left: 0;
-	display: none;
+	transform: scaleY(1);
+  	transform-origin: top; /* quan trọng: bắt đầu từ trên */
+  	transition: transform 0.3s ease, opacity 0.3s ease;
+	visibility: hidden;
+	opacity: 0;
+}
+
+.san-pham-header:hover .product-list{
+	transform: scaleY(1);
+	visibility: visible;
+	opacity: 1;
+}
+
+.product-list .wp-block-woocommerce-product-categories{
+	width: 100%;
+}
+
+.product-list .wp-block-woocommerce-product-categories ul{
+	justify-content: center;
+	margin-right: 20px;
 }
 
 .product-list>div>ul>li:first-child{
@@ -59,7 +140,7 @@
 
 .product-list ul li a:hover {
 	background: #fff;
-	color: #e0963a;
+	color: #c83791;
 }
 
 .product-list ul li ul{    
@@ -76,10 +157,6 @@
 	color: #333;
 }
 
-.san-pham-header:hover .product-list{
-	display: block !important;
-	transition: all 0.3s ease;
-}
 .site-footer-widget {
 	float: left;
 	width: 100%;
@@ -103,27 +180,104 @@
     background: #f5f5f5;
     overflow: hidden;
 }
+
+.mini-account-login{
+  	display: inline-flex;
+    align-items: center;
+    justify-content: center;
+	padding-top: 8px;
+	text-decoration: none;
+	color: #333;
+}
+
 .mini-account-dropdown {
     display: none;
     position: absolute;
-    top: 100%;
-    right: 0;
+    top: 44px;
+    right: -20px;
     background: #fff;
     border: 1px solid #ddd;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    min-width: 150px;
+    min-width: 200px;
     z-index: 10;
+	padding: 8px 15px;
+	margin: 5px;
 }
 .mini-account:hover .mini-account-dropdown {
     display: block;
 }
 .mini-account-dropdown a {
     display: block;
-    padding: 8px 12px;
+    padding: 8px 15px;
     text-decoration: none;
     color: #333;
+	margin: 0px;
 }
 .mini-account-dropdown a:hover {
     background: #f0f0f0;
 }
 
+.wp-container-core-group-is-layout-b585a4aa {
+    justify-content: flex-start;
+}
+
+.avatar-header {
+  margin-left: auto !important;
+}
+
+.avatar-header>div>div{
+	margin-top: 10px;
+}
+
+/* footer */
+.single-contact {
+    display: flex;
+    align-items: baseline;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.mid-footer .single-contact .fa, .mid-footer .single-contact .fas {
+    color: #171517;
+}
+.single-contact .fa, .single-contact .fas {
+    color: #c83791;
+    margin-right: 5px;
+    width: 20px;
+    flex: 0 0 20px;
+}
+
+footer{
+	padding: 50px 0;
+	background-color: #eee;
+}
+
+footer a{
+	color: #333;
+	text-decoration: none;
+}	
+
+.mid-footer .footer-block .footer-title {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: inherit;
+    font-weight: bold;
+}
+
+.mid-footer .list-menu {
+    list-style: none;
+    padding: 0px;
+}
+
+.mid-footer .list-menu li+li {
+    margin-top: 10px;
+}
+
+header {
+    box-shadow: 0 0px 5px 1px rgba(0, 0, 0, 0.4);
+    position: sticky;
+	top: 0;
+    position: -webkit-sticky;
+    z-index: 1000;
+    background: #fff;
+}

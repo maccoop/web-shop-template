@@ -235,6 +235,119 @@ add_shortcode( 'mini_account', function() {
             </div>
         </div>';
     } else {
-        return '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" class="mini-account-login">👤 Đăng nhập</a>';
+        return '<div class="mini-account">
+			<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" class="mini-account-login">👤 Đăng nhập</a>
+		</div>';
     }
+});
+
+function mytheme_enqueue_bootstrap() {
+    // Bootstrap CSS
+    wp_enqueue_style(
+        'bootstrap-css',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
+        array(),
+        '5.3.3'
+    );
+
+    // Bootstrap JS (yêu cầu Popper đi kèm, đã có trong bundle)
+    wp_enqueue_script(
+        'bootstrap-js',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
+        array('jquery'), // chỉ cần nếu bạn dùng jQuery
+        '5.3.3',
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'mytheme_enqueue_bootstrap');
+
+function mytheme_enqueue_fontawesome() {
+    wp_enqueue_style(
+        'font-awesome',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css',
+        array(),
+        '5.15.4'
+    );
+}
+add_action('wp_enqueue_scripts', 'mytheme_enqueue_fontawesome');
+
+// Thêm field "Shop Phone" trong WooCommerce settings
+add_filter( 'woocommerce_general_settings', function( $settings ) {
+    $updated_settings = [];
+    foreach ( $settings as $section ) {
+        $updated_settings[] = $section;
+        if ( isset( $section['id'] ) && 'general_options' === $section['id'] && 'sectionend' === $section['type'] ) {
+            $updated_settings[] = [
+                'title'    => __( 'Store Phone', 'mytheme' ),
+                'id'       => 'woocommerce_store_phone',
+                'type'     => 'text',
+                'css'      => 'min-width:300px;',
+                'desc'     => __( 'Điền số điện thoại liên hệ của shop.', 'mytheme' ),
+                'default'  => '',
+            ];
+        }
+    }
+    return $updated_settings;
+});
+
+
+// Thêm field "Shop Mail" trong WooCommerce settings
+add_filter( 'woocommerce_general_settings', function( $settings ) {
+    $updated_settings = [];
+    foreach ( $settings as $section ) {
+        $updated_settings[] = $section;
+        if ( isset( $section['id'] ) && 'general_options' === $section['id'] && 'sectionend' === $section['type'] ) {
+            $updated_settings[] = [
+                'title'    => __( 'Store Email', 'mytheme' ),
+                'id'       => 'woocommerce_store_email',
+                'type'     => 'text',
+                'css'      => 'min-width:300px;',
+                'desc'     => __( 'Điền mail liên hệ của shop', 'mytheme' ),
+                'default'  => '',
+            ];
+        }
+    }
+    return $updated_settings;
+});
+
+
+// Thêm field "Shop full name" trong WooCommerce settings
+add_filter( 'woocommerce_general_settings', function( $settings ) {
+    $updated_settings = [];
+    foreach ( $settings as $section ) {
+        $updated_settings[] = $section;
+        if ( isset( $section['id'] ) && 'general_options' === $section['id'] && 'sectionend' === $section['type'] ) {
+            $updated_settings[] = [
+                'title'    => __( 'Store Full Name', 'mytheme' ),
+                'id'       => 'woocommerce_store_full_name',
+                'type'     => 'text',
+                'css'      => 'min-width:300px;',
+                'desc'     => __( 'Điền tên đầy đủ shop của bạn', 'mytheme' ),
+                'default'  => '',
+            ];
+        }
+    }
+    return $updated_settings;
+});
+
+
+
+
+// Thêm field "facebook" trong WooCommerce settings
+add_filter( 'woocommerce_general_settings', function( $settings ) {
+    $updated_settings = [];
+    foreach ( $settings as $section ) {
+        $updated_settings[] = $section;
+        if ( isset( $section['id'] ) && 'general_options' === $section['id'] && 'sectionend' === $section['type'] ) {
+            $updated_settings[] = [
+                'title'    => __( 'Store Facebook link', 'mytheme' ),
+                'id'       => 'woocommerce_store_facebook',
+                'type'     => 'text',
+                'css'      => 'min-width:300px;',
+                'desc'     => __( 'Điền link facebook của bạn', 'mytheme' ),
+                'default'  => '',
+            ];
+        }
+    }
+    return $updated_settings;
 });
