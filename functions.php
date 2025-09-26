@@ -250,6 +250,14 @@ function mytheme_enqueue_bootstrap() {
         '5.3.3'
     );
 
+    // Bootstrap Icons (nếu cần icon)
+    wp_enqueue_style(
+        'bootstrap-icons',
+        'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css',
+        array(),
+        '1.11.1'
+    );
+
     // Bootstrap JS (yêu cầu Popper đi kèm, đã có trong bundle)
     wp_enqueue_script(
         'bootstrap-js',
@@ -350,4 +358,118 @@ add_filter( 'woocommerce_general_settings', function( $settings ) {
         }
     }
     return $updated_settings;
+});
+
+function mytheme_set_default_logo() {
+	$src  = get_stylesheet_directory() . '/img/logo.jpg';
+    $dest = wp_upload_dir();
+    $target = $dest['path'] . '/logo.jpg'; // copy vào uploads/
+
+    if ( file_exists( $src ) && ! file_exists( $target ) ) {
+        copy( $src, $target );
+    }
+
+    $filetype = wp_check_filetype( basename( $target ), null );
+
+    $attachment = array(
+        'guid'           => $dest['url'] . '/logo.jpg',
+        'post_mime_type' => $filetype['type'],
+        'post_title'     => 'Site Logo',
+        'post_status'    => 'inherit'
+    );
+
+    $attach_id = wp_insert_attachment( $attachment, $target );
+    require_once( ABSPATH . 'wp-admin/includes/image.php' );
+    $attach_data = wp_generate_attachment_metadata( $attach_id, $target );
+    wp_update_attachment_metadata( $attach_id, $attach_data );
+
+    set_theme_mod( 'custom_logo', $attach_id );
+}
+add_action( 'after_switch_theme', 'mytheme_set_default_logo' );
+
+// Shortcode: [my_product_cats id="15" hide_empty="1"]
+add_shortcode( 'my_product_cats', function( $atts ) {
+    $atts = shortcode_atts( array(
+        'id'         => 0,     // ID category cha, mặc định = 0 (tất cả)
+        'hide_empty' => 0,     // 1 = ẩn category rỗng
+    ), $atts, 'my_product_cats' );
+
+    $terms = get_terms( array(
+        'taxonomy'   => 'product_cat',
+        'parent'     => (int) $atts['id'],
+        'hide_empty' => (bool) $atts['hide_empty'],
+    ) );
+
+	$parent_term = get_term( (int) $atts['id'], 'product_cat' );
+
+	if ( is_wp_error( $parent_term ) ) {
+		return '';
+	}
+	ob_start();
+	
+	//echo '<div class="wp-block-group navigation-items san-pham-header">';
+	echo '<div class="wp-block-group navigation-items san-pham-header">';
+	echo '<a href="' . esc_url( get_term_link( $parent_term ) ) . '">'. esc_html( $parent_term->name ) .'</a>';
+
+    if (!( empty( $terms ) || is_wp_error( $terms ) )) {
+		echo '<div class="wp-block-group product-list">';
+		echo '<ul class="wc-block-product-categories-list">';
+		foreach ( $terms as $term ) {
+			$thumbnail_id = get_term_meta( $term->term_id, 'thumbnail_id', true );
+			$image_url    = $thumbnail_id ? wp_get_attachment_url( $thumbnail_id ) : wc_placeholder_img_src();
+			echo '<li class="wc-block-product-categories-list-item">';
+			echo '<a href="' . esc_url( get_term_link( $term ) ) . '">' . esc_html( $term->name ) . '</a>';
+			echo '</li>';
+		}
+		echo '</ul>';
+		echo '</div>';
+	}
+    echo '</div>';
+    return ob_get_clean();
+});
+
+add_shortcode( 'my_product_search', function() {
+    ob_start(); ?>
+    <div class="header-search">
+        <button type="button" class="search-toggle"><i class="bi bi-search"></i></button>
+        <form role="search" method="get" class="woocommerce-product-search search-form-hidden" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+            <input type="search" id="woocommerce-product-search-field" class="search-field" placeholder="Tìm sản phẩm..." value="<?php echo get_search_query(); ?>" name="s" />
+            <input type="hidden" name="post_type" value="product"/>
+			<button type="button" class="search-close"><i class="bi bi-x-lg"></i></button>
+        </form>
+    </div>
+    <?php
+    return ob_get_clean();
+});
+
+add_action('wp_footer', function() { ?>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const toggle = document.querySelector(".header-search .search-toggle");
+    const form   = document.querySelector(".header-search form");
+	const close  = document.querySelector(".header-search .search-close");
+
+	toggle.addEventListener("click", function() {
+		form.classList.add("search-form-active");
+	});
+	close.addEventListener("click", function() {
+		form.classList.remove("search-form-active");
+	});
+	const badges = document.querySelectorAll('.wc-block-mini-cart__quantity-badge');
+    badges.forEach(badge => {
+        const svg = badge.querySelector('svg');
+        if(svg) svg.remove();
+    });
+});
+</script>
+<?php });
+
+add_action("mytheme_enqueue_font_awesome", function () {
+    // Font Awesome 6 Free (CDN)
+    wp_enqueue_style(
+        'font-awesome',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css',
+        array(),
+        '6.4.2'
+    );
 });

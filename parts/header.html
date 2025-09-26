@@ -16,14 +16,30 @@
 			<div class="wp-block-group  navigation-items">
 				<a href="/gioi-thieu">Giới thiệu</a>
 			</div>
-			<div class="wp-block-group  navigation-items san-pham-header">
-				<a href="/cua-hang">Sản phẩm</a>
-				<div class="wp-block-group product-list">
-					<!-- wp:woocommerce/product-categories {"hasCount":false,"hasImage":false,"isDropdown":false,"align":"wide"} /-->
-				</div>
+			
+			<!-- wp:shortcode -->
+				[my_product_cats id="37"]
+			<!-- /wp:shortcode -->
+			
+			<!-- wp:shortcode -->
+				[my_product_cats id="43"]
+			<!-- /wp:shortcode -->
+
+			<div class="wp-block-group  navigation-items">
+				<a href="/feedback">Feedback KH</a>
+			</div>
+			 
+			<div class="wp-block-group  navigation-items">
+				<a href="/lien-he">Liên hệ</a>
 			</div>
 		</div>
 		<div class="wp-block-group navigation-header  avatar-header">
+
+			<div class="wp-block-group cart-icon navigation-items">
+				<!-- wp:shortcode -->
+					[my_product_search]
+				<!-- /wp:shortcode -->
+			</div>
 			<div class="wp-block-group cart-icon navigation-items">
 				<!-- wp:woocommerce/mini-cart /-->
 			</div>

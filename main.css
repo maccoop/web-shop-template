@@ -17,6 +17,12 @@ a{
 
 a:hover{
 	color: #c83791 !important;
+	outline: none;
+}
+
+a:selected{
+	color: #c83791 !important;
+	outline: none;
 }
 
 body {
@@ -34,17 +40,17 @@ body {
 	margin-right: 20px;
 }
 
-.navigation-items{
-	display: flex;
-	padding: 8px 15px;
-	align-items: left;
+.navigation-items {
+    display: flex;
+    padding: 0px 15px;
 }
 
 .navigation-items>a{
   	position: relative;
 	text-decoration: none;    
   	display: inline-block; /* rất quan trọng */         
-  	color: #333;                           
+  	color: #333;
+	padding-bottom: 10px;                        
 }
 
 .navigation-items>a::after {
@@ -70,15 +76,13 @@ body {
 
 
 .product-list{
-	width: 100%;
 	height: auto;
 	z-index: 9999;         /* nằm trên tất cả giao diện khác */
 	background: #fff;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.15);  /* tạo bóng để nổi bật */
 	position: absolute;
-	padding: 20px 50px;
-	top: 80px;
-	left: 0;
+	padding: 8px 10px;
+	top: 60px;
 	transform: scaleY(1);
   	transform-origin: top; /* quan trọng: bắt đầu từ trên */
   	transition: transform 0.3s ease, opacity 0.3s ease;
@@ -97,16 +101,21 @@ body {
 }
 
 .product-list .wp-block-woocommerce-product-categories ul{
-	justify-content: center;
+	justify-content: left;
 	margin-right: 20px;
 }
 
-.product-list>div>ul>li:first-child{
-	display: none;
+.product-list>div>ul>li>a{
+    content: "";
+    display: block;
+    border-bottom: 1px solid #000;
+    margin: 8px 10px;
+	font-weight: 600;
 }
 
-.product-list>div>ul>li{
-	font-weight: bold;
+
+.product-list>div>ul>li>a{
+	padding-left: 5px;
 }
 
 
@@ -115,7 +124,8 @@ body {
 }
 
 .product-list ul {
-	display: flex;               /* biến ul thành flex container */
+	display: flex;    
+	flex-direction: column;           /* biến ul thành flex container */
 	flex-wrap: wrap;           /* tự xuống dòng nếu tràn */
 	/*gap: 15px;                  /* khoảng cách giữa các mục */
 	list-style: none;
@@ -125,22 +135,21 @@ body {
 
 .product-list ul li {
 	display: inline-block;      /* đảm bảo từng mục nằm ngang */
-	max-width: 500px;
+	max-width: 600px;
 }
 
 .product-list ul li a {
 	display: block;
 	padding: 10px 10px;
-	background: #fff;
-	border-radius: 5px;
+	background: transparent;
 	text-decoration: none;
 	color: #333;
 	transition: all 0.3s ease;
 }
 
 .product-list ul li a:hover {
-	background: #fff;
 	color: #c83791;
+	outline: none;
 }
 
 .product-list ul li ul{    
@@ -280,4 +289,66 @@ header {
     position: -webkit-sticky;
     z-index: 1000;
     background: #fff;
+}
+
+/* css for search */
+/* Ẩn form ban đầu */
+.header-search form {
+    display: none;
+	
+}
+
+/* Khi active thì hiển thị toàn chiều ngang header */
+.header-search .search-form-active {
+	display: flex;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	padding: 5px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+	z-index: 9999;
+}
+
+.header-search input.search-field {
+   	width: 50%;
+    height: 70%;
+    top: 15%;
+    left: 25%;
+    font-size: 16px;
+    padding: 10px 20px;
+    outline: none;
+    border-radius: 20px;
+    position: inherit;
+}
+
+.header-search .search-toggle {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.header-search button.search-close{
+	position: absolute;
+	top: calc(50% - 15px);
+	left: calc(75% + 10px);
+	background: none;
+	border: none;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.wc-block-mini-cart__quantity-badge::after {
+    content: "<i class="bi bi-cart"></i>";
+	font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 24px;
+    color: #000;
+}
+
+.wc-block-mini-cart__quantity-badge svg{
+	display: none;
 }
