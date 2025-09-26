@@ -329,6 +329,7 @@ header {
     border: none;
     font-size: 20px;
     cursor: pointer;
+	padding-top:5px;
 }
 
 .header-search button.search-close{
@@ -341,12 +342,11 @@ header {
 	cursor: pointer;
 }
 
-.wc-block-mini-cart__quantity-badge::after {
-    content: "<i class="bi bi-cart"></i>";
-	font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    font-size: 24px;
+.wc-block-mini-cart__quantity-badge::before {
+    font-family: "bootstrap-icons";
+	content: "\F243";
     color: #000;
+	font-size: 24px;
 }
 
 .wc-block-mini-cart__quantity-badge svg{

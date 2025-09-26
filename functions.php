@@ -455,21 +455,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	close.addEventListener("click", function() {
 		form.classList.remove("search-form-active");
 	});
-	const badges = document.querySelectorAll('.wc-block-mini-cart__quantity-badge');
-    badges.forEach(badge => {
-        const svg = badge.querySelector('svg');
-        if(svg) svg.remove();
-    });
 });
 </script>
 <?php });
-
-add_action("mytheme_enqueue_font_awesome", function () {
-    // Font Awesome 6 Free (CDN)
-    wp_enqueue_style(
-        'font-awesome',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css',
-        array(),
-        '6.4.2'
-    );
-});
