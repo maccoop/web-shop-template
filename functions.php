@@ -205,6 +205,7 @@ endif;
 
 function main_style() {
     wp_enqueue_style('main', get_stylesheet_directory_uri() . '/main.css');
+    wp_enqueue_style('shop', get_stylesheet_directory_uri() . '/styles/shop.css');
 }
 
 add_action( 'init', 'twentytwentyfour_pattern_categories' );
@@ -458,3 +459,85 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 <?php });
+
+remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
+
+// Thêm hỗ trợ WooCommerce cho theme
+
+add_action('after_setup_theme', function () {
+    add_theme_support( 'woocommerce' );
+});
+
+add_action( 'template_include', function( $template ) {
+    if ( is_shop() ) {
+        error_log( 'SHOP PAGE TEMPLATE: ' . $template );
+    }
+    return $template;
+});
+
+// Đổi số sản phẩm trên mỗi trang
+add_filter( 'loop_shop_per_page', function( $cols ) {
+    return 12; // đổi thành số bạn muốn, ví dụ 12 sản phẩm mỗi trang
+}, 20 );
+
+// Đổi số cột hiển thị trong grid
+add_filter( 'loop_shop_columns', function() {
+    return 5; // số cột, ví dụ 3 cột
+}, 20 );
+
+function sang_custom_products_shortcode( $atts ) {
+    ob_start();
+
+    // Lấy category & attribute từ URL
+    $cat_slug   = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
+    $color_slug = isset($_GET['color']) ? sanitize_text_field($_GET['color']) : '';
+
+    // Query sản phẩm
+    $args = array(
+        'post_type'      => 'product',
+        'posts_per_page' => 12,
+    );
+
+    $tax_query = array();
+
+    if ( $cat_slug ) {
+        $tax_query[] = array(
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => $cat_slug,
+        );
+    }
+
+    if ( $color_slug ) {
+        $tax_query[] = array(
+            'taxonomy' => 'pa-color', // slug attribute WooCommerce
+            'field'    => 'color',
+            'terms'    => $color_slug,
+        );
+    }
+
+    if ( !empty($tax_query) ) {
+        $args['tax_query'] = $tax_query;
+    }
+
+    $query = new WP_Query($args);
+    ?>
+	<!-- Cột phải: Products -->
+	<div class="sang-shop-products">
+		<?php if ( $query->have_posts() ) : ?>
+			<ul class="products columns-3">
+				<?php while ( $query->have_posts() ) : $query->the_post(); ?>
+					<?php wc_get_template_part( 'content', 'product' ); ?>
+				<?php endwhile; ?>
+			</ul>
+			<?php wp_reset_postdata(); ?>
+		<?php else : ?>
+			<p>Không có sản phẩm nào.</p>
+		<?php endif; ?>
+	</div>
+    <?php
+
+    return ob_get_clean();
+}
+add_shortcode( 'custom_products', 'sang_custom_products_shortcode' );
+

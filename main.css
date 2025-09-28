@@ -352,3 +352,43 @@ header {
 .wc-block-mini-cart__quantity-badge svg{
 	display: none;
 }
+
+/* Gán màu cho thuộc tính */
+.woocommerce-product-attributes-item__value {
+    display: inline-block;
+}
+
+.woocommerce-product-attributes-item__value a{
+	color: transparent !important;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+	background: black;   /* ví dụ màu */
+    box-shadow: 0 0 0 4px #fff,   /* khoảng cách trắng 3px */
+                0 0 0 5px #333;  /* border ngoài màu đen */
+	margin-right: 10px;
+}
+
+a[href*="mau-sac/den"] {
+  background: black;
+}
+a[href*="mau-sac/da"] {
+  background: brown;
+}
+a[href*="mau-sac/hong"] {
+  background: pink;
+}
+a[href*="mau-sac/trang"] {
+  background: white;
+}
+a[href*="mau-sac/xam"] {
+  background: gray;
+}
+a[href*="mau-sac/xanh"] {
+  background: green;
+}
+
+.woocommerce table.variations tr td select {
+    height: 4em;
+}
