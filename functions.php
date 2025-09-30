@@ -475,22 +475,13 @@ add_action( 'template_include', function( $template ) {
     return $template;
 });
 
-// Đổi số sản phẩm trên mỗi trang
-add_filter( 'loop_shop_per_page', function( $cols ) {
-    return 12; // đổi thành số bạn muốn, ví dụ 12 sản phẩm mỗi trang
-}, 20 );
-
-// Đổi số cột hiển thị trong grid
-add_filter( 'loop_shop_columns', function() {
-    return 5; // số cột, ví dụ 3 cột
-}, 20 );
-
-function sang_custom_products_shortcode( $atts ) {
+add_shortcode( 'custom_products',function( $atts ){
     ob_start();
 
     // Lấy category & attribute từ URL
     $cat_slug   = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
     $color_slug = isset($_GET['color']) ? sanitize_text_field($_GET['color']) : '';
+    $name_slug = isset($_GET['srch']) ? sanitize_text_field($_GET['srch']) : '';
 
     // Query sản phẩm
     $args = array(
@@ -516,6 +507,10 @@ function sang_custom_products_shortcode( $atts ) {
         );
     }
 
+    if ( $name_slug ) {
+       $args['s'] = $name_slug;
+    }
+
     if ( !empty($tax_query) ) {
         $args['tax_query'] = $tax_query;
     }
@@ -538,6 +533,5 @@ function sang_custom_products_shortcode( $atts ) {
     <?php
 
     return ob_get_clean();
-}
-add_shortcode( 'custom_products', 'sang_custom_products_shortcode' );
+});
 

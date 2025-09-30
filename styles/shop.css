@@ -15,6 +15,7 @@
   text-align: center;
   padding: 15px;
   transition: all 0.3s ease;
+  width: 250px !important;
 }
 
 .woocommerce ul.products li.product:hover {
@@ -64,8 +65,10 @@
 
 .sang-shop-container {
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 25% 75%;
     gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .sang-shop-filter {
@@ -93,4 +96,20 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
+}
+
+.wpc-filters-ul-list{
+  flex-direction: column;
+}
+
+
+.woocommerce ul.products::after,.woocommerce ul.products::before,.woocommerce-page ul.products::after,.woocommerce-page ul.products::before {
+    content: " ";
+    display: none
+}
+
+.wpc-filters-widget-content{
+  padding-right: 30px;
+  max-width: 300px;
+  padding-left: 20px;
 }
